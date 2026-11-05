@@ -1,0 +1,39 @@
+# Name displayed in the GitHub Actions tab
+name: Hello World with Java
+
+# Events that trigger the workflow
+on:
+  # Run automatically when code is pushed to main
+  push:
+    branches:
+      - main
+
+  # Allow the workflow to be run manually
+  workflow_dispatch:
+
+jobs:
+  hello-java:
+    name: Run Java Hello World
+    runs-on: ubuntu-latest
+
+    steps:
+      # Download the repository files
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # Install Java 17
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      # Compile the Java program
+      - name: Compile Java
+        run: javac Hello.java
+
+      # Execute the program
+      - name: Run Java program
+        env:
+          WHO_TO_GREET: 'GitHub Actions Student'
+        run: java Hello
